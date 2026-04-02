@@ -1,17 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
-import { useAuth } from '@/hooks/useAuth';
 
-export default function HomeScreen() {
-  const { user } = useAuth();
-
+export default function ExploreScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home</Text>
-      <Text style={styles.subtitle}>
-        Welcome{user?.email ? `, ${user.email}` : ''}!
-      </Text>
+      <Text style={styles.title}>Explore</Text>
+      <Text style={styles.subtitle}>Discover content here.</Text>
     </View>
   );
 }
@@ -31,6 +26,5 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     opacity: 0.6,
-    textAlign: 'center',
   },
 });
