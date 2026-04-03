@@ -40,7 +40,7 @@ export function SocialButtons() {
       </Pressable>
 
       {/* Facebook */}
-      <Pressable
+      {/* <Pressable
         style={[styles.button, { borderColor: Colors[colorScheme].tabIconDefault }]}
         onPress={() => handlePress('Facebook', signInWithFacebook)}
         disabled={loadingProvider !== null}>
@@ -48,7 +48,7 @@ export function SocialButtons() {
         <Text style={styles.label}>
           {loadingProvider === 'Facebook' ? 'Connecting...' : 'Continue with Facebook'}
         </Text>
-      </Pressable>
+      </Pressable> */}
 
       {/* Apple — iOS only, required by App Store guidelines when using other social providers */}
       {Platform.OS === 'ios' && (
