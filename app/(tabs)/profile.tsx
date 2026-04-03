@@ -6,7 +6,7 @@ import Colors from '@/constants/Colors';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function ProfileScreen() {
-  const { user, signOut } = useAuth();
+  const { user, signOut, deleteAccount } = useAuth();
   const colorScheme = useColorScheme() ?? 'light';
 
   async function handleSignOut() {
@@ -26,6 +26,27 @@ export default function ProfileScreen() {
     ]);
   }
 
+  async function handleDeleteAccount() {
+    Alert.alert(
+      'Delete account',
+      'This will permanently delete your account and all associated data. This action cannot be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await deleteAccount();
+            } catch (error: any) {
+              Alert.alert('Error', error.message);
+            }
+          },
+        },
+      ]
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={[styles.avatar, { backgroundColor: Colors[colorScheme].tint }]}>
@@ -41,6 +62,10 @@ export default function ProfileScreen() {
         style={[styles.signOutButton, { borderColor: Colors[colorScheme].tint }]}
         onPress={handleSignOut}>
         <Text style={[styles.signOutText, { color: Colors[colorScheme].tint }]}>Sign out</Text>
+      </Pressable>
+
+      <Pressable style={styles.deleteButton} onPress={handleDeleteAccount}>
+        <Text style={styles.deleteText}>Delete account</Text>
       </Pressable>
     </View>
   );
@@ -85,5 +110,13 @@ const styles = StyleSheet.create({
   signOutText: {
     fontWeight: '600',
     fontSize: 16,
+  },
+  deleteButton: {
+    marginTop: 16,
+    paddingVertical: 8,
+  },
+  deleteText: {
+    fontSize: 14,
+    color: '#ef4444',
   },
 });

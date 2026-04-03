@@ -86,6 +86,12 @@ export function useAuth() {
     if (error) throw error;
   }
 
+  async function deleteAccount() {
+    const { error } = await supabase.rpc('delete_user');
+    if (error) throw error;
+    await supabase.auth.signOut();
+  }
+
   return {
     session,
     user,
@@ -97,5 +103,6 @@ export function useAuth() {
     signInWithFacebook,
     signInWithApple,
     signOut,
+    deleteAccount,
   };
 }
