@@ -48,7 +48,26 @@ $$;
 
 The **Delete account** option in the Profile screen will now work.
 
-## 5. Configure email auth
+## 5. Configure redirect URLs
+
+Supabase needs to know which URLs are allowed to receive auth redirects (email confirmation, password reset, OAuth callbacks).
+
+1. Go to **Authentication → URL Configuration**
+2. Set **Site URL** to your app scheme:
+   ```
+   expostarterkit://
+   ```
+3. Under **Redirect URLs**, add:
+   ```
+   expostarterkit://**
+   ```
+4. Save
+
+> **Deep links only work in standalone builds.** The `expostarterkit://` scheme is registered on the device only when the app is installed natively (via `eas build` or a development build). It does **not** work in Expo Go — tapping a confirmation link while running in Expo Go will show a Safari error.
+>
+> **For development with Expo Go:** disable email confirmation instead (see step 6 below) so no link is needed.
+
+## 6. Configure email auth
 
 Email/password sign up and sign in work out of the box. By default, Supabase sends a confirmation email after sign up.
 
