@@ -44,3 +44,4 @@ npx expo start
 | [Supabase Setup](docs/01-supabase-setup.md) | Create project, configure keys, enable delete account |
 | [Auth Providers](docs/02-auth-providers.md) | Google, Apple, and Facebook OAuth setup |
 | [Project Structure](docs/03-project-structure.md) | Folder layout, auth flow, how to extend |
+| [Analytics & Crash Reporting](docs/04-analytics.md) | PostHog and Sentry setup |

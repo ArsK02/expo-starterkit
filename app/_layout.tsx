@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/components/useColorScheme';
+import { posthog } from '@/lib/posthog';
+import { Sentry } from '@/lib/sentry';
 import { supabase } from '@/lib/supabase';
 import { useAuthStore } from '@/store/auth.store';
 
@@ -59,6 +61,16 @@ function RootLayoutNav() {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+
+      if (session?.user) {
+        // Identify user in PostHog and Sentry
+        posthog.identify(session.user.id, { email: session.user.email ?? null });
+        Sentry.setUser({ id: session.user.id, email: session.user.email });
+      } else {
+        // Clear identity on sign-out
+        posthog.reset();
+        Sentry.setUser(null);
+      }
     });
 
     return () => subscription.unsubscribe();

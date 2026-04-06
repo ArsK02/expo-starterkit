@@ -1,6 +1,7 @@
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as WebBrowser from 'expo-web-browser';
 import { Platform } from 'react-native';
+import { posthog } from '@/lib/posthog';
 import { supabase } from '@/lib/supabase';
 import { useAuthStore } from '@/store/auth.store';
 
@@ -12,11 +13,13 @@ export function useAuth() {
   async function signInWithEmail(email: string, password: string) {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
+    posthog.capture('user_signed_in', { provider: 'email' });
   }
 
   async function signUpWithEmail(email: string, password: string) {
     const { error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
+    posthog.capture('user_signed_up', { provider: 'email' });
   }
 
   async function resetPassword(email: string) {
@@ -39,6 +42,7 @@ export function useAuth() {
         const refreshToken = params.get('refresh_token');
         if (accessToken && refreshToken) {
           await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+          posthog.capture('user_signed_in', { provider: 'google' });
         }
       }
     }
@@ -59,6 +63,7 @@ export function useAuth() {
         const refreshToken = params.get('refresh_token');
         if (accessToken && refreshToken) {
           await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+          posthog.capture('user_signed_in', { provider: 'facebook' });
         }
       }
     }
@@ -78,17 +83,20 @@ export function useAuth() {
         token: credential.identityToken,
       });
       if (error) throw error;
+      posthog.capture('user_signed_in', { provider: 'apple' });
     }
   }
 
   async function signOut() {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
+    posthog.capture('user_signed_out');
   }
 
   async function deleteAccount() {
     const { error } = await supabase.rpc('delete_user');
     if (error) throw error;
+    posthog.capture('user_deleted_account');
     await supabase.auth.signOut();
   }
 
