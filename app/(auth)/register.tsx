@@ -1,4 +1,4 @@
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useState } from 'react';
 import {
   Alert,
@@ -38,7 +38,9 @@ export default function RegisterScreen() {
     setLoading(true);
     try {
       await signUpWithEmail(email, password);
-      Alert.alert('Check your email', 'We sent you a confirmation link.');
+      Alert.alert('Check your email', 'We sent you a confirmation link', [
+        { text: 'Sign in', onPress: () => router.push('/(auth)/login') },
+      ]);
     } catch (error: any) {
       Alert.alert('Sign up failed', error.message);
     } finally {

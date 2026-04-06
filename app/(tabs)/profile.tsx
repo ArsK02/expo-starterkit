@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { Alert, Pressable, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
@@ -64,6 +65,14 @@ export default function ProfileScreen() {
         <Text style={[styles.signOutText, { color: Colors[colorScheme].tint }]}>Sign out</Text>
       </Pressable>
 
+      <Link href="/privacy-policy" asChild>
+        <Pressable style={styles.linkButton}>
+          <Text style={[styles.linkText, { color: Colors[colorScheme].tabIconDefault }]}>
+            Privacy Policy
+          </Text>
+        </Pressable>
+      </Link>
+
       <Pressable style={styles.deleteButton} onPress={handleDeleteAccount}>
         <Text style={styles.deleteText}>Delete account</Text>
       </Pressable>
@@ -111,8 +120,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
   },
+  linkButton: {
+    marginTop: 32,
+    paddingVertical: 8,
+  },
+  linkText: {
+    fontSize: 14,
+  },
   deleteButton: {
-    marginTop: 16,
+    marginTop: 8,
     paddingVertical: 8,
   },
   deleteText: {
