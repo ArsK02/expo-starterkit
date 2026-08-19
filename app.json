@@ -34,7 +34,14 @@
       "expo-web-browser",
       "expo-secure-store",
       "expo-apple-authentication",
-      ["@sentry/react-native", { "organization": "YOUR_ORG_SLUG", "project": "YOUR_PROJECT_SLUG" }]
+      [
+        "@sentry/react-native",
+        {
+          "organization": "YOUR_ORG_SLUG",
+          "project": "YOUR_PROJECT_SLUG"
+        }
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
